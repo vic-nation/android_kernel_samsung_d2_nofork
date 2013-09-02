@@ -1,0 +1,15 @@
+#!/bin/bash
+make distclean
+export CROSS_COMPILE=/home/john/platforms/cm-10.2/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin/arm-eabi-
+export ARCH=arm
+
+make cyanogen_infiniteuscc_defconfig
+make modules
+make -j16 zImage 2>&1 | tee ~/logs/oudhs_d2_infinite.txt
+
+[ -d modules ] || mkdir -p modules
+find -name '*.ko' -exec cp -av {} modules/ \;
+geany ~/logs/oudhs_d2_infinite.txt
+exit 1
+
+
